@@ -167,27 +167,29 @@ df['Industry / Vertical'].replace(['ecommerce', 'ECommerce', 'E-Commerce', 'E-co
 
 
 #There is still some junk data, it is easy to clean it manually than write code to clean. hint: sort data by any date column
+
+
 #Some dates are not inline with standard dd/mm/yyyy pattern, below is attempt to fix it.
-# df.Date = df.Date[1:].apply(lambda x: datetime.strptime(x, "%d/%m/%Y").strftime("%d/%m/%Y"))
-# df.Date = pd.to_datetime(df.Date, infer_datetime_format=True)
-#
-# #Plotting funding per year
-# df.Date.dt.year.value_counts().sort_index().plot(kind='bar')
-# plt.xlabel('Year')
-# plt.ylabel('Count')
-# plt.title('Startups Funded Per Year')
-#
-# #Plotting funding per month
-# ser = df.Date.groupby([df.Date.dt.year, df.Date.dt.month]).count().unstack(level=-1)
-# ser.columns = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-# ser.plot(kind='bar', stacked=True, figsize=(15,8), legend='reverse');
-#
-# # #Removing missing values and plotting rest of  the data
-# df['Industry / Vertical'].value_counts()[:3].append(df['Industry / Vertical'].value_counts()[4:10]).plot(kind='pie', figsize=(8,8))
-#
-# # #Removing missing values and plotting rest of  the data
-# City_Count = df['City / Location'].value_counts()
-# City_Count[:4].append(City_Count[5:16]).plot(kind='barh', fontsize=12, figsize=(12,8))
-#
-# plt.show()
+df.Date = df.Date[1:].apply(lambda x: datetime.strptime(x, "%d/%m/%Y").strftime("%d/%m/%Y"))
+df.Date = pd.to_datetime(df.Date, infer_datetime_format=True)
+
+#Plotting funding per year
+df.Date.dt.year.value_counts().sort_index().plot(kind='bar')
+plt.xlabel('Year')
+plt.ylabel('Count')
+plt.title('Startups Funded Per Year')
+
+#Plotting funding per month
+ser = df.Date.groupby([df.Date.dt.year, df.Date.dt.month]).count().unstack(level=-1)
+ser.columns = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+ser.plot(kind='bar', stacked=True, figsize=(15,8), legend='reverse');
+
+# #Removing missing values and plotting rest of  the data
+df['Industry / Vertical'].value_counts()[:3].append(df['Industry / Vertical'].value_counts()[4:10]).plot(kind='pie', figsize=(8,8))
+
+# #Removing missing values and plotting rest of  the data
+City_Count = df['City / Location'].value_counts()
+City_Count[:4].append(City_Count[5:16]).plot(kind='barh', fontsize=12, figsize=(12,8))
+
+plt.show()
 
